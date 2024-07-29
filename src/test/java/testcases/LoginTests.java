@@ -1,9 +1,12 @@
 package testcases;
 
 import base.CommonTests;
+import org.openqa.selenium.io.FileHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
+
+import java.io.IOException;
 
 public class LoginTests extends CommonTests {
     private String username = "tomsmith";
@@ -18,8 +21,7 @@ public class LoginTests extends CommonTests {
             "×";
 
     @Test
-    public void SuccessfulLogin()
-    {
+    public void SuccessfulLogin() throws IOException {
         Assert.assertEquals(
                 new HomePage(driver)
                         .clickOnLoginPage()
@@ -32,8 +34,7 @@ public class LoginTests extends CommonTests {
     }
 
     @Test
-    public void IncorrectUsernameLogin()
-    {
+    public void IncorrectUsernameLogin() throws IOException {
         HomePage home = new HomePage(driver);
         Assert.assertEquals(
                 home.clickOnLoginPage()
@@ -46,8 +47,7 @@ public class LoginTests extends CommonTests {
     }
 
     @Test
-    public void IncorrectPasswordLogin()
-    {
+    public void IncorrectPasswordLogin() throws IOException {
         HomePage home = new HomePage(driver);
         Assert.assertEquals(
                 home.clickOnLoginPage()
@@ -58,4 +58,5 @@ public class LoginTests extends CommonTests {
 
                 , errorTextPassword);
     }
+
 }

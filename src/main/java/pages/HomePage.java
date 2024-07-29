@@ -12,6 +12,7 @@ public class HomePage extends BasePage {
     By dropDownLocator = By.linkText("Dropdown");
     By LargeAndDeepDom = By.linkText("Large & Deep DOM");
     By InfiniteScroll = By.linkText("Infinite Scroll");
+    By hovers=By.linkText("Hovers");
 
     //Constructor
     public HomePage (WebDriver driver)
@@ -48,6 +49,12 @@ public class HomePage extends BasePage {
     {
         click(InfiniteScroll);
         return new InfiniteScrollPage(getDriver());
+    }
+
+    public HoverPage clickOnHovers()
+    {
+        click(hovers);
+        return new HoverPage(getDriver());
     }
 
     private void click (By locator)

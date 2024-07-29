@@ -6,12 +6,14 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import utils.ActionBot;
 import utils.WindowManager;
 
 import java.time.Duration;
 
 public class BasePage {
     //Variables
+
     private final int Timeout = 30;
     private final int Polling = 250;
 
@@ -32,10 +34,10 @@ public class BasePage {
     }
 
     //Actions
-    protected WebDriver getDriver() {
+    public WebDriver getDriver() {
         return driver;
     }
-    protected Wait<WebDriver> getWait() {
+    public Wait<WebDriver> getWait() {
         return wait;
     }
 

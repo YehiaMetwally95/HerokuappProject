@@ -2,12 +2,16 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utils.ActionBot;
+
+import java.io.IOException;
 
 public class DynamicLoadingPage extends BasePage {
     //Variables
+    ActionBot bot = new ActionBot(getDriver());
 
     //Locators
-    By ExampleTwoLinkLocator = By.xpath("//a[contains(text(),'Example 2')]");
+    By ExampleTwoLinkLocator = By.linkText("Example 2: Element rendered after the fact");
 
     //Constructor
     protected DynamicLoadingPage(WebDriver driver) {
@@ -15,11 +19,8 @@ public class DynamicLoadingPage extends BasePage {
     }
 
     //Actions
-    public DynamicLoadingSubPage clickOnExample2Link() {
-        getWait().until(f -> {
-            getDriver().findElement(ExampleTwoLinkLocator).click();
-            return true;
-        });
+    public DynamicLoadingSubPage clickOnExample2Link() throws IOException {
+        bot.press(ExampleTwoLinkLocator);
     return new DynamicLoadingSubPage(getDriver());
     }
 }

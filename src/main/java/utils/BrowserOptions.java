@@ -32,7 +32,7 @@ public class BrowserOptions {
     public static FirefoxOptions getFireFoxOptions()
     {
         FirefoxOptions option = new FirefoxOptions();
-        option.addArguments("-headless");
+        //option.addArguments("-headless");
         return option;
     }
 

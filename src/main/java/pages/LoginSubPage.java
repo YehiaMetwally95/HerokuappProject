@@ -19,7 +19,7 @@ public class LoginSubPage extends BasePage {
     //Actions
     public String getWelcomeText()
     {
-        getWait().until(ExpectedConditions.elementToBeClickable(welcomeTextLocator));
+        getWait().until(ExpectedConditions.visibilityOfElementLocated(welcomeTextLocator));
         return getDriver().findElement(welcomeTextLocator).getText();
     }
 }

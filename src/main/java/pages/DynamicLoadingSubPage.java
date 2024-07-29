@@ -3,9 +3,13 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.ActionBot;
+
+import java.io.IOException;
 
 public class DynamicLoadingSubPage extends BasePage {
     //Variables
+    ActionBot bot = new ActionBot(getDriver());
 
     //Locators
     By startButtonLocator = By.xpath("//div[@id='start']/button");
@@ -16,11 +20,8 @@ public class DynamicLoadingSubPage extends BasePage {
     }
 
     //Actions
-    public DynamicLoadingSubPage clickOnStartButton() {
-        getWait().until(f -> {
-            getDriver().findElement(startButtonLocator).click();
-            return true;
-        });
+    public DynamicLoadingSubPage clickOnStartButton() throws IOException {
+       bot.press(startButtonLocator);
     return this;
     }
 

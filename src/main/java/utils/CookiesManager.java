@@ -39,4 +39,10 @@ public class CookiesManager {
     {
         driver.manage().deleteAllCookies();
     }
+
+    public int getCookiesNumber()
+    {
+        return driver.manage().getCookies().size();
+    }
+
 }

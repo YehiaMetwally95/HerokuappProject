@@ -3,13 +3,16 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.ActionBot;
+
+import java.io.IOException;
 
 public class LoginPage extends BasePage {
     //Variables
-
+    ActionBot bot = new ActionBot(getDriver());
     //Locators
-    By usernameLocator = By.id("username");
-    By passwordLocator = By.id("password");
+    By usernameLocator = By.xpath("//input[@id='username']");
+    By passwordLocator = By.xpath("//input[@id='password']");
     By loginButtonLocator = By.xpath("//button[@type='submit']");
     By errorAlertLocator = By.id("flash");
 
@@ -20,39 +23,26 @@ public class LoginPage extends BasePage {
     }
 
     //Actions
-    public LoginPage setUsername(String username)
-    {
-        getWait().until(f -> {
-            getDriver().findElement(usernameLocator).sendKeys(username);
-            return true;
-        });
-    return this;
-    }
-
-    public LoginPage setPassword(String password)
-    {
-        getWait().until(f -> {
-            getDriver().findElement(passwordLocator).sendKeys(password);
-            return true;
-        });
+    public LoginPage setUsername(String username) throws IOException {
+        bot.type(usernameLocator,username);
         return this;
     }
 
-    public LoginSubPage clickLoginButtonSuccess()
-    {
-        getWait().until(f -> {
-            getDriver().findElement(loginButtonLocator).click();
-            return true;
-        });
+    public LoginPage setPassword(String password) throws IOException {
+
+        bot.type(passwordLocator,password);
+        return this;
+    }
+
+    public LoginSubPage clickLoginButtonSuccess() throws IOException {
+
+        bot.press(loginButtonLocator);
     return new LoginSubPage(getDriver());
     }
 
-    public LoginPage clickLoginButtonFailure()
-    {
-        getWait().until(f -> {
-            getDriver().findElement(loginButtonLocator).click();
-            return true;
-        });
+    public LoginPage clickLoginButtonFailure() throws IOException {
+
+        bot.press(loginButtonLocator);
         return new LoginPage(getDriver());
     }
 

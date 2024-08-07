@@ -5,43 +5,38 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import utils.DropdownActions;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DropDownPage extends BasePage {
+public class DropDownPage {
     //Variables
-
+    WebDriver driver;
+    DropdownActions dropdownActions;
     //Locators
     By dropdownLocator = By.id("dropdown");
     //Constructor
     protected DropDownPage(WebDriver driver) {
-        super(driver);
+        this.driver = driver;
+        dropdownActions = new DropdownActions(driver);
     }
 
     //Actions
 
-    public DropDownPage selectFromDropDown(String value)
-    {
-        dropDownElement().selectByValue(value);
+    public DropDownPage selectFromDropDown(String value) {
+        dropdownActions.selectFromDropdownByValue(dropdownLocator,value);
         return this;
     }
 
     public List<String> getAllActualOptions()
     {
-        List<WebElement> options = dropDownElement().getOptions();
-        return options.stream().map(e->e.getText()).collect(Collectors.toList());
+       return dropdownActions.getAllOptionsAsString(dropdownLocator);
     }
 
     public String getSelectedOption()
     {
-        return dropDownElement().getFirstSelectedOption().getText();
-    }
-
-    private Select dropDownElement()
-    {
-        getWait().until(ExpectedConditions.elementToBeClickable(dropdownLocator));
-        return new Select(getDriver().findElement(dropdownLocator));
+        return dropdownActions.getSelectedOption(dropdownLocator);
     }
 
 }

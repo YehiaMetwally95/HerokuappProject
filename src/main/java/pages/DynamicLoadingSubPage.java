@@ -7,16 +7,18 @@ import utils.ActionBot;
 
 import java.io.IOException;
 
-public class DynamicLoadingSubPage extends BasePage {
+public class DynamicLoadingSubPage{
     //Variables
-    ActionBot bot = new ActionBot(getDriver());
+    WebDriver driver;
+    ActionBot bot;
 
     //Locators
     By startButtonLocator = By.xpath("//div[@id='start']/button");
     By loadedTextLocator = By.xpath("//h4[contains(text(),'Hello')]");
     //Constructor
     protected DynamicLoadingSubPage(WebDriver driver) {
-        super(driver);
+        this.driver = driver;
+        bot = new ActionBot(driver);
     }
 
     //Actions
@@ -26,8 +28,7 @@ public class DynamicLoadingSubPage extends BasePage {
     }
 
     public String getLoadedText() {
-        getWait().until(ExpectedConditions.elementToBeClickable(loadedTextLocator));
-        return getDriver().findElement(loadedTextLocator).getText();
+        return bot.readText(loadedTextLocator);
     }
 
 }

@@ -1,10 +1,8 @@
-package testcases;
+package testCases;
 
-import base.CommonTests;
-import org.openqa.selenium.WebDriver;
+import baseTest.CommonTests;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import utils.WindowManager;
 
 public class ScrollTests extends CommonTests {
 
@@ -36,6 +34,6 @@ public class ScrollTests extends CommonTests {
     {
         new HomePage(driver)
                 .clickOnInfiniteScroll()
-                .scrollDownToFifthParagraph();
+                .scrollDownToTenthParagraph();
     }
 }

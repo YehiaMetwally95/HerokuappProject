@@ -16,7 +16,7 @@ public class BrowserOptions {
         ChromeOptions option = new ChromeOptions();
         option.addArguments("--disable-infobars");
         option.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
-       // option.addArguments("--headless=new");
+        //option.addArguments("--headless=new");
         return option;
     }
 

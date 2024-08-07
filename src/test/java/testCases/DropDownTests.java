@@ -1,10 +1,9 @@
-package testcases;
+package testCases;
 
-import base.CommonTests;
+import baseTest.CommonTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
 import pages.HomePage;
 
 import java.util.ArrayList;

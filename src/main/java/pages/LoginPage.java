@@ -1,15 +1,19 @@
 package pages;
 
+import io.qameta.allure.Step;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.bidi.log.Log;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import utils.ActionBot;
 
 import java.io.IOException;
 
-public class LoginPage extends BasePage {
+public class LoginPage {
     //Variables
-    ActionBot bot = new ActionBot(getDriver());
+    WebDriver driver;
+    ActionBot bot;
     //Locators
     By usernameLocator = By.xpath("//input[@id='username']");
     By passwordLocator = By.xpath("//input[@id='password']");
@@ -17,38 +21,44 @@ public class LoginPage extends BasePage {
     By errorAlertLocator = By.id("flash");
 
     //Constructor
-    protected LoginPage(WebDriver driver)
+    public LoginPage(WebDriver driver)
     {
-        super(driver);
+        this.driver = driver;
+        bot = new ActionBot(driver);
     }
 
     //Actions
+    @Step("Enter Username")
     public LoginPage setUsername(String username) throws IOException {
         bot.type(usernameLocator,username);
         return this;
     }
 
+    @Step("Enter Password")
     public LoginPage setPassword(String password) throws IOException {
-
         bot.type(passwordLocator,password);
         return this;
     }
 
+    @Step("Click on Submit Button")
     public LoginSubPage clickLoginButtonSuccess() throws IOException {
 
         bot.press(loginButtonLocator);
-    return new LoginSubPage(getDriver());
+        return new LoginSubPage(driver);
     }
 
+    @Step("Click on Submit Button")
     public LoginPage clickLoginButtonFailure() throws IOException {
 
         bot.press(loginButtonLocator);
-        return new LoginPage(getDriver());
+        return this;
     }
 
-    public String getErrorAlert()
-    {
-        getWait().until(ExpectedConditions.elementToBeClickable(errorAlertLocator));
-        return getDriver().findElement(errorAlertLocator).getText();
+    @Step("Verify Error Massage")
+    public LoginPage verifyErrorAlert(String errorAlert){
+
+        Assert.assertEquals(bot.readText(errorAlertLocator)
+        ,errorAlert);
+        return this;
     }
 }

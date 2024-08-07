@@ -18,7 +18,7 @@ public class EventListener implements WebDriverListener
         System.out.println("Clicking on " + element.getText());
 
         File source = element.getScreenshotAs(OutputType.FILE);
-        File destination = new File ("src/test/resources/ScreenshotsForButtons/"+element.getText()+".png");
+        File destination = new File ("src/test/resources/Screenshots/ScreenshotsForButtons/"+element.getText()+".png");
         try {
             FileHandler.copy(source,destination);
         } catch (IOException e) {
@@ -33,7 +33,7 @@ public class EventListener implements WebDriverListener
 
         WebElement element = driver.findElement(locator);
         File source = element.getScreenshotAs(OutputType.FILE);
-        File destination = new File ("src/test/resources/ScreenshotsForWebElements/"+element.getText()+"-"+element.getAttribute("id")+".png");
+        File destination = new File ("src/test/resources/Screenshots/ScreenshotsForWebElements/"+element.getText()+"-"+element.getAttribute("id")+".png");
         try {
             FileHandler.copy(source,destination);
         } catch (IOException e) {

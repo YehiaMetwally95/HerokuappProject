@@ -6,21 +6,23 @@ import utils.ActionBot;
 
 import java.io.IOException;
 
-public class DynamicLoadingPage extends BasePage {
+public class DynamicLoadingPage {
     //Variables
-    ActionBot bot = new ActionBot(getDriver());
+    WebDriver driver;
+    ActionBot bot;
 
     //Locators
     By ExampleTwoLinkLocator = By.linkText("Example 2: Element rendered after the fact");
 
     //Constructor
     protected DynamicLoadingPage(WebDriver driver) {
-        super(driver);
+        this.driver=driver;
+        bot = new ActionBot(driver);
     }
 
     //Actions
     public DynamicLoadingSubPage clickOnExample2Link() throws IOException {
         bot.press(ExampleTwoLinkLocator);
-    return new DynamicLoadingSubPage(getDriver());
+    return new DynamicLoadingSubPage(driver);
     }
 }

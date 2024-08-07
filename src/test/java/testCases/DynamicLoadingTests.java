@@ -1,6 +1,6 @@
-package testcases;
+package testCases;
 
-import base.CommonTests;
+import baseTest.CommonTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;

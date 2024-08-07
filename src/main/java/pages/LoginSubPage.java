@@ -1,25 +1,33 @@
 package pages;
 
+import io.qameta.allure.Step;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.ActionBot;
 
-public class LoginSubPage extends BasePage {
+public class LoginSubPage {
     //Variables
-
+    WebDriver driver;
+    ActionBot bot;
     //Locators
     By welcomeTextLocator = By.xpath("//h4[contains(text(),'Welcome')]");
 
     //Constructor
-    protected LoginSubPage(WebDriver driver)
+    public LoginSubPage(WebDriver driver)
     {
-        super(driver);
+        this.driver = driver;
+        bot = new ActionBot(driver);
     }
 
     //Actions
-    public String getWelcomeText()
+    @Step("Verify Welcome Text")
+    public LoginSubPage verifyWelcomeText(String welcomeText)
     {
-        getWait().until(ExpectedConditions.visibilityOfElementLocated(welcomeTextLocator));
-        return getDriver().findElement(welcomeTextLocator).getText();
+        Assert.assertEquals(
+                bot.readText(welcomeTextLocator)
+                ,welcomeText
+        );
+        return this;
     }
 }

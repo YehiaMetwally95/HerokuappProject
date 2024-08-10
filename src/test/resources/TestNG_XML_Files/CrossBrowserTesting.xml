@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Login">
+    <test name="Chrome Login">
+        <classes>
+            <class name="testCases.LoginTests">
+                <methods>
+                    <include name = "SuccessfulLogin"/>
+                    <include name = "IncorrectUsernameLogin"/>
+                    <include name = "IncorrectPasswordLogin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

@@ -13,8 +13,7 @@ public class AdsTests extends CommonTests {
     String originalPageTitle = "Entry Ad";
 
     @Test
-    public void getAdTitle()
-    {
+    public void getAdTitle() throws IOException {
         Assert.assertEquals(
                 new HomePage(driver)
                         .clickOnAdsPage()

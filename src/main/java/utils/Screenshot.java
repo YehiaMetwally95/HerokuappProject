@@ -2,9 +2,11 @@ package utils;
 
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -21,28 +23,27 @@ public class Screenshot {
         this.driver = driver;
     }
 
-    public void captureSuccess(int TestNGResult , String fileName) throws IOException {
-        //Increment ScreenshotFileNumber
-        if (TestNGResult ==SuccessCodeForTestNG) {
+    public void captureSuccess(ITestResult result) throws IOException {
+        if (result.getStatus()==SuccessCodeForTestNG) {
 
             File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            File destination = new File("src/test/resources/Screenshots/ScreenshotsForSuccess/"+ fileName +".png");
+            File destination = new File("src/test/resources/Screenshots/ScreenshotsForSuccess/"+ result.getName() +".png");
             org.openqa.selenium.io.FileHandler.copy(source, destination);
 
             var screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-            Allure.addAttachment(fileName,new ByteArrayInputStream(screenshot));
+            Allure.addAttachment(result.getName(),new ByteArrayInputStream(screenshot));
         }
     }
 
-    public void captureFailure(int TestNGResult , String fileName) throws IOException {
-        if (TestNGResult == FailureCodeForTestNG) {
+    public void captureFailure(ITestResult result) throws IOException {
+        if (result.getStatus() == FailureCodeForTestNG) {
 
             File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            File destination = new File("src/test/resources/Screenshots/ScreenshotsForFailure/"+ fileName +".png");
+            File destination = new File("src/test/resources/Screenshots/ScreenshotsForFailure/"+ result.getName() +".png");
             org.openqa.selenium.io.FileHandler.copy(source, destination);
 
             var screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-            Allure.addAttachment(fileName,new ByteArrayInputStream(screenshot));
+            Allure.addAttachment(result.getName(),new ByteArrayInputStream(screenshot));
         }
     }
 

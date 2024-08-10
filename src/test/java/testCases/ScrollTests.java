@@ -4,25 +4,24 @@ import baseTest.CommonTests;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
+import java.io.IOException;
+
 public class ScrollTests extends CommonTests {
 
     @Test
-    private void scrollToTable()
-    {
+    private void scrollToTable() throws IOException {
         new HomePage(driver).clickOnLargeAndDeemDom().scrollDownToTable();
     }
 
     @Test
-    private void scrollByGivenAmountFromHeader()
-    {
+    private void scrollByGivenAmountFromHeader() throws IOException {
         new HomePage(driver)
                 .clickOnLargeAndDeemDom()
                 .scrollByGivenAmountFromHeader(100,100);
     }
 
     @Test
-    private void scrollByGivenAmountFromFooter()
-    {
+    private void scrollByGivenAmountFromFooter() throws IOException {
         new HomePage(driver)
                 .clickOnLargeAndDeemDom()
                 .scrollDownToFooter()
@@ -30,8 +29,7 @@ public class ScrollTests extends CommonTests {
     }
 
     @Test
-    private void scrollDownToTargetParagraph()
-    {
+    private void scrollDownToTargetParagraph() throws IOException {
         new HomePage(driver)
                 .clickOnInfiniteScroll()
                 .scrollDownToTenthParagraph();

@@ -25,7 +25,7 @@ public class LoginSteps {
     String errorMassage = "Your email is invalid!\n×";
 
     @Given("User navigates to Login Page")
-    public void user_navigates_to_login_page() {
+    public void user_navigates_to_login_page() throws IOException {
         basesteps.getWindowManager().navigateToURL(basesteps.url);
         new HomePage(basesteps.driver).clickOnLoginPage();
     }

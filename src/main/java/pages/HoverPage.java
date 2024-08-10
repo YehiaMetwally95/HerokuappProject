@@ -2,10 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import utils.ActionBot;
-
-import java.time.Duration;
 
 public class HoverPage {
 
@@ -25,7 +22,7 @@ public class HoverPage {
     //Actions
     public HoverSubPage clickOnViewProfile()
     {
-        bot.hovertoSubMenu(mainMenu,subMenu);
+        bot.hoverToSubMenu(mainMenu,subMenu);
     return new HoverSubPage(driver);
     }
 }

@@ -3,8 +3,8 @@ package testCases;
 import baseTest.CommonTests;
 import io.qameta.allure.*;
 import org.json.simple.parser.ParseException;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import utils.JsonFileReader;
@@ -14,6 +14,7 @@ import java.io.IOException;
 @Epic("HerokuApp Functionalities")
 @Feature("User Login")
 @Story("Verify User Login on UI")
+@Listeners(utils.TestNGListners.class)
 public class LoginTests extends CommonTests {
 
     JsonFileReader jsonReader;
@@ -30,10 +31,10 @@ public class LoginTests extends CommonTests {
     public void SuccessfulLogin() throws IOException, ParseException {
         new HomePage(driver)
                 .clickOnLoginPage()
-                .setUsername(jsonReader.getTestData("SuccessfulLogin","Username"))
-                .setPassword(jsonReader.getTestData("SuccessfulLogin","Password"))
+                .setUsername(jsonReader.getTestData("SuccessfulLogin.Username"))
+                .setPassword(jsonReader.getTestData("SuccessfulLogin.Password"))
                 .clickLoginButtonSuccess()
-                .verifyWelcomeText(jsonReader.getTestData("SuccessfulLogin","WelcomeText"));
+                .verifyWelcomeText(jsonReader.getTestData("SuccessfulLogin.WelcomeText"));
     }
 
     @Description("Failed Login With Invalid Username And Valid Password")
@@ -42,10 +43,10 @@ public class LoginTests extends CommonTests {
     public void IncorrectUsernameLogin() throws IOException, ParseException {
         new HomePage(driver)
                 .clickOnLoginPage()
-                .setUsername(jsonReader.getTestData("IncorrectUserLogin","Username"))
-                .setPassword(jsonReader.getTestData("IncorrectUserLogin","Password"))
+                .setUsername(jsonReader.getTestData("IncorrectUserLogin.Username"))
+                .setPassword(jsonReader.getTestData("IncorrectUserLogin.Password"))
                 .clickLoginButtonFailure()
-                .verifyErrorAlert(jsonReader.getTestData("IncorrectUserLogin","ErrorMassage"));
+                .verifyErrorAlert(jsonReader.getTestData("IncorrectUserLogin.ErrorMassage"));
     }
 
     @Description("Failed Login With Valid Username And Invalid Password")
@@ -54,9 +55,9 @@ public class LoginTests extends CommonTests {
     public void IncorrectPasswordLogin() throws IOException, ParseException {
         new HomePage(driver)
                 .clickOnLoginPage()
-                .setUsername(jsonReader.getTestData("IncorrectPasswordLogin","Username"))
-                .setPassword(jsonReader.getTestData("IncorrectPasswordLogin","Password"))
+                .setUsername(jsonReader.getTestData("IncorrectPasswordLogin.Username"))
+                .setPassword(jsonReader.getTestData("IncorrectPasswordLogin.Password"))
                 .clickLoginButtonFailure()
-                .verifyErrorAlert(jsonReader.getTestData("IncorrectPasswordLogin","ErrorMassage"));
+                .verifyErrorAlert(jsonReader.getTestData("IncorrectPasswordLogin.ErrorMassage"));
     }
 }

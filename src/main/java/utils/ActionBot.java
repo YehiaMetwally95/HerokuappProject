@@ -5,7 +5,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
-import org.openqa.selenium.support.ui.Wait;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,8 +26,9 @@ public class ActionBot {
             driver.findElement(locator).sendKeys(text);
             return true;
         });
+        System.out.println("Typing " + text);
 
-       File source = driver.findElement(locator).getScreenshotAs(OutputType.FILE);
+        File source = driver.findElement(locator).getScreenshotAs(OutputType.FILE);
        File destination =
                new File ("src/test/resources/Screenshots/ScreenshotsForTextBoxes/"+driver.findElement(locator).getAttribute("name")+".png");
        FileHandler.copy(source,destination);
@@ -38,9 +38,11 @@ public class ActionBot {
     public void press(By locator) throws IOException {
 
         Waits.getFluentWait(driver).until(f -> {
+            System.out.println("Clicking On " + driver.findElement(locator).getText());
             driver.findElement(locator).click();
             return true;
          });
+
     }
 
     //ActionBot3 for Get Text from Element
@@ -80,7 +82,7 @@ public class ActionBot {
     }
 
     //ActionBot7 for Hover on Main-menu & Sub-menu
-    public void hovertoSubMenu(By mainMenuLocator , By subMenuLocator) {
+    public void hoverToSubMenu(By mainMenuLocator , By subMenuLocator) {
         Waits.getFluentWait(driver).until(f -> {
             new Actions(driver)
                     .moveToElement(driver.findElement(mainMenuLocator))

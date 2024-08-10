@@ -1,39 +1,56 @@
 package baseTest;
 
 import org.apache.commons.io.FileUtils;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.openqa.selenium.*;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
+import utils.JDBC;
+import utils.JsonFileReader;
+import utils.JsonFileWriter;
+import utils.TestDataGenerator;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.Duration;
+import java.io.*;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 public class LinearTests {
+     String dbUrl = "jdbc:mysql://127.0.0.1:3306/yehiadb1";
+     String dbUser = "root";
+     String dbPassword = "yehia";
+     String query = "SELECT * FROM yehiadb1.usercredentials ORDER BY Username ASC";
+     String filepath = "src/test/resources/TestDataJsonFiles/LoginCredentials.json";
+     String[] jsonKeys = {"Username","Password","Massage"};
+     String[] jsonMainKeys = {"ValidCredentials","InvalidUserCredentials",
+             "InvalidPasswordCredentials"};
 
+    JsonFileReader json = new JsonFileReader(filepath);
     @Test
-            public void test () throws IOException, ParseException {
-        WebDriver driver = new EdgeDriver();
-        Wait <WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofMillis(250))
-                .ignoring(NotFoundException.class)
-                .ignoring(ElementNotInteractableException.class)
-                .ignoring(AssertionError.class)
-                .ignoring(StaleElementReferenceException.class);
-
-        driver.navigate().to("https://the-internet.herokuapp.com/upload");
-
-        File filename = new File("src/test/resources/TestDataJsonFiles/LoginCredentials.json");
-        //convert the json file to string
-        String jsonString = FileUtils.readFileToString(filename,"UTF8");
-        //parse the json string into object
-        Object obj = new JSONParser().parse(jsonString);
-        //return the object as Json Object
+    public void test() throws IOException, SQLException {
+        JDBC.setJsonFileFromDB(dbUrl,dbUser,dbPassword,query,filepath,jsonKeys);
     }
 
+    @Test
+    public void test2() throws IOException, SQLException, ParseException {
+     JDBC.setJsonFileFromDB(dbUrl,dbUser,dbPassword,query,filepath,jsonKeys,jsonMainKeys);
+     json.setTestData("InvalidPasswordCredentials.Password"
+                ,TestDataGenerator.generateStrongPassword());
+     json.setTestData("InvalidUserCredentials.Username"
+                ,TestDataGenerator.generateName());
+    }
+
+    @Test
+    public void test3() throws IOException, SQLException, ParseException {
+
+        String key = "Yehia.Metwally.Mohamed";
+        String[] arrofSTG = key.split("\\.",2);
+        System.out.println(arrofSTG[0]);
+        System.out.println(arrofSTG[1]);
+
+
+    }
 }

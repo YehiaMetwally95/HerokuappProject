@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,7 @@ public class DropDownTests extends CommonTests {
     }
 
     @Test
-public void getDropDownValue()
-{
+public void getDropDownValue() throws IOException {
     Assert.assertEquals(
             new HomePage(driver)
                     .clickOnDropDownPage()
@@ -33,8 +33,7 @@ public void getDropDownValue()
 }
 
     @Test
-    public void checkAllDropDownValues()
-    {
+    public void checkAllDropDownValues() throws IOException {
         Assert.assertEquals(
                 new HomePage(driver)
                         .clickOnDropDownPage()

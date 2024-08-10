@@ -3,6 +3,7 @@ package baseTest;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.*;
@@ -69,9 +70,6 @@ public class CommonTests {
     {
         //Open Browser
         driver= new ChromeDriver(BrowserOptions.getChromeOptions());
-        //Register a Listener that listen to driver actions
-//        EventListener Listener = new EventListener();
-//        driver = new EventFiringDecorator(Listener).decorate(driver);
 
         //Perform actions on Window Manager
         getWindowManager().maximizeWindow();
@@ -82,10 +80,10 @@ public class CommonTests {
     public void getScreenshots(ITestResult result) throws IOException {
 
         //Take Screenshot after every successful test
-        getScreenshot().captureSuccess(result.getStatus() ,result.getName());
+        getScreenshot().captureSuccess(result);
 
         //Take Screenshot after every failed test
-        getScreenshot().captureFailure(result.getStatus() ,result.getName() );
+        getScreenshot().captureFailure(result);
     }
 
     @AfterMethod (dependsOnMethods = "getScreenshots")
@@ -95,8 +93,6 @@ public class CommonTests {
         getCookiesManager().deleteAllCookies();
 
         //Close Browser after every test
-        getWindowManager().closeCurrentWindow();
+       getWindowManager().closeCurrentWindow();
     }
-
-
 }

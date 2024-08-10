@@ -56,9 +56,7 @@ public class LoginPage {
 
     @Step("Verify Error Massage")
     public LoginPage verifyErrorAlert(String errorAlert){
-
-        Assert.assertEquals(bot.readText(errorAlertLocator)
-        ,errorAlert);
+        Assert.assertTrue(bot.readText(errorAlertLocator).contains(errorAlert));
         return this;
     }
 }

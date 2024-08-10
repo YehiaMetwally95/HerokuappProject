@@ -4,6 +4,9 @@ import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 import utils.JDBC;
@@ -46,10 +49,14 @@ public class LinearTests {
     @Test
     public void test3() throws IOException, SQLException, ParseException {
 
-        String key = "Yehia.Metwally.Mohamed";
-        String[] arrofSTG = key.split("\\.",2);
-        System.out.println(arrofSTG[0]);
-        System.out.println(arrofSTG[1]);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("https://the-internet.herokuapp.com/login");
+        By usernameLocator = By.xpath("//input[@id='username']");
+        By passwordLocator = By.xpath("//input[@id='password']");
+        By text = By.id("flash");
+        driver.findElement(usernameLocator).sendKeys("www");
+        driver.findElement(passwordLocator).sendKeys("sss", Keys.RETURN);
+        System.out.println(driver.findElement(text).getText());
 
 
     }

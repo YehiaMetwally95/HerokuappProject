@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
+
 import static utils.ActionBot.*;
 import static utils.AlertsActions.*;
 import static utils.BrowserOptions.*;
@@ -32,8 +34,7 @@ public class LoginSubPage {
 
     //Actions
     @Step("Verify Welcome Text")
-    public LoginSubPage verifyWelcomeText(String welcomeText)
-    {
+    public LoginSubPage verifyWelcomeText(String welcomeText) throws IOException {
         Assert.assertEquals(
                 readText(driver,welcomeTextLocator)
                 ,welcomeText

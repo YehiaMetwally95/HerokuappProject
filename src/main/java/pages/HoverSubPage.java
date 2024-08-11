@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
+
 import static utils.ActionBot.*;
 import static utils.AlertsActions.*;
 import static utils.BrowserOptions.*;
@@ -30,8 +32,7 @@ public class HoverSubPage {
     }
 
     //Actions
-    public String getDisplayedText()
-    {
+    public String getDisplayedText() throws IOException {
         return readText(driver,displayedText);
     }
 }

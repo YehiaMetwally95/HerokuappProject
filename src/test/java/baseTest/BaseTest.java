@@ -11,18 +11,10 @@ import utils.*;
 import java.io.File;
 import java.io.IOException;
 
-import static utils.ActionBot.*;
-import static utils.AlertsActions.*;
-import static utils.BrowserOptions.*;
 import static utils.CookiesManager.*;
-import static utils.DropdownActions.*;
-import static utils.JDBC.*;
-import static utils.JsonFileWriter.*;
 import static utils.Screenshot.*;
-import static utils.ScrollActions.*;
-import static utils.TestDataGenerator.*;
-import static utils.Waits.*;
 import static utils.WindowManager.*;
+import static utils.ThreadDriver.*;
 
 public class BaseTest {
 
@@ -37,7 +29,7 @@ public class BaseTest {
     //Clear Old Files
     public void clearOldFiles() throws IOException {
 
-        File file = new File("src/test/resources/Screenshots/ScreenshotsForFailure");
+        File file = new File("src/test/resources/Screenshots/FailedTests");
         String[] myFiles;
         if (file.isDirectory()) {
             myFiles = file.list();
@@ -46,7 +38,7 @@ public class BaseTest {
                 myFile.delete();
             }}
 
-        file = new File("src/test/resources/Screenshots/ScreenshotsForSuccess");
+        file = new File("src/test/resources/Screenshots/SuccessfulTests");
         if (file.isDirectory()) {
             myFiles = file.list();
             for (int i = 0; i < myFiles.length; i++) {
@@ -85,30 +77,31 @@ public class BaseTest {
                     System.out.println("Wrong driver name");
         }
 
-        //Generate Isolated Driver from ThreadLocal
-        threadDriver.set(driver);
+        //Generate Isolated Driver from ThreadDriver
+        setIsolatedDriver(threadDriver,driver);
 
-        //Perform actions on Window Manager
-        navigateToURL(threadDriver.get(), url);
+        //Perform actions on Window
+        navigateToURL(getIsolatedDriver(threadDriver), url);
     }
 
     @AfterMethod
     public void getScreenshots(ITestResult result) throws IOException {
 
         //Take Screenshot after every successful test
-        captureSuccess(threadDriver.get(),result);
+        captureSuccess(getIsolatedDriver(threadDriver),result);
 
         //Take Screenshot after every failed test
-        captureFailure(threadDriver.get(), result);
+        captureFailure(getIsolatedDriver(threadDriver), result);
     }
 
     @AfterMethod (dependsOnMethods = "getScreenshots")
     public void tearDownBrowser(){
 
         //Delete All Cookies
-        deleteAllCookies(threadDriver.get());
+        deleteAllCookies(getIsolatedDriver(threadDriver));
         //Close Browser after every test
-        closeCurrentWindow(threadDriver.get());
-        threadDriver.remove();
+        closeCurrentWindow(getIsolatedDriver(threadDriver));
+
+        removeIsolatedDriver(threadDriver);
     }
 }

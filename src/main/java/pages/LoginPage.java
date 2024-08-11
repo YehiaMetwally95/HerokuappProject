@@ -62,7 +62,7 @@ public class LoginPage {
     }
 
     @Step("Verify Error Massage")
-    public LoginPage verifyErrorAlert(String errorAlert){
+    public LoginPage verifyErrorAlert(String errorAlert) throws IOException {
         Assert.assertEquals(readText(driver,errorAlertLocator)
         ,errorAlert);
         return this;

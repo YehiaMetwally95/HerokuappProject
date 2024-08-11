@@ -9,8 +9,14 @@ import org.openqa.selenium.io.FileHandler;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import static utils.Screenshot.*;
+import static utils.TestDataGenerator.*;
 
 public class ActionBot {
+
+    static String textBoxesPath = "src/test/resources/Screenshots/TextBoxes/";
+    static String pressedButtonsPath ="src/test/resources/Screenshots/PressedButtons/";
+    static String retrievedTextPath ="src/test/resources/Screenshots/RetrievedTexts/";
 
     //ActionBot1 for Typing on TextBox
     public static void type (WebDriver driver , By locator , String text) throws IOException {
@@ -19,12 +25,10 @@ public class ActionBot {
             driver.findElement(locator).sendKeys(text);
             return true;
         });
+
         System.out.println("Typing " + text);
 
-        File source = driver.findElement(locator).getScreenshotAs(OutputType.FILE);
-       File destination =
-               new File ("src/test/resources/Screenshots/ScreenshotsForTextBoxes/"+driver.findElement(locator).getAttribute("name")+".png");
-       FileHandler.copy(source,destination);
+        takeElementScreenshot(driver,locator,textBoxesPath,generateInteger(),"png");
     }
 
     //ActionBot2 for Pressing on Button or Link
@@ -32,6 +36,11 @@ public class ActionBot {
 
         Waits.getFluentWait(driver).until(f -> {
             System.out.println("Clicking On " + driver.findElement(locator).getText());
+            try {
+                takeElementScreenshot(driver,locator,pressedButtonsPath,generateInteger(),"png");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             driver.findElement(locator).click();
             return true;
          });
@@ -39,12 +48,16 @@ public class ActionBot {
     }
 
     //ActionBot3 for Get Text from Element
-    public static String readText(WebDriver driver,By locator){
+    public static String readText(WebDriver driver,By locator) throws IOException {
         Waits.getFluentWait(driver).until(f -> {
           driver.findElement(locator).getText();
             return true;
         });
+
+        takeElementScreenshot(driver,locator,retrievedTextPath,generateInteger(),"png");
+
         return driver.findElement(locator).getText().replace("\n","");
+
     }
 
     //ActionBot4 for Verify Element is Displayed

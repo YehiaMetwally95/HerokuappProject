@@ -13,6 +13,8 @@ import utils.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static utils.ThreadDriver.getIsolatedDriver;
+
 @Epic("HerokuApp Functionalities")
 @Feature("User Login")
 @Story("Verify User Login on UI")
@@ -46,7 +48,7 @@ public class LoginTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test
     public void SuccessfulLogin() throws IOException, ParseException {
-        WebDriver driver = threadDriver.get();
+        WebDriver driver = getIsolatedDriver(threadDriver);
         new HomePage(driver)
                 .clickOnLoginPage()
                 .setUsername(jsonReader.getTestData("ValidCredentials.Username"))
@@ -59,7 +61,7 @@ public class LoginTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void IncorrectUsernameLogin() throws IOException, ParseException {
-        WebDriver driver = threadDriver.get();
+        WebDriver driver = getIsolatedDriver(threadDriver);
         new HomePage(driver)
                 .clickOnLoginPage()
                 .setUsername(jsonReader.getTestData("InvalidUserCredentials.Username"))
@@ -72,7 +74,7 @@ public class LoginTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void IncorrectPasswordLogin() throws IOException, ParseException {
-        WebDriver driver = threadDriver.get();
+        WebDriver driver = getIsolatedDriver(threadDriver);
         new HomePage(driver)
                 .clickOnLoginPage()
                 .setUsername(jsonReader.getTestData("InvalidPasswordCredentials.Username"))

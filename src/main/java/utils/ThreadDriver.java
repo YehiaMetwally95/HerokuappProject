@@ -4,16 +4,18 @@ import org.openqa.selenium.WebDriver;
 
 public class ThreadDriver {
 
-    public static WebDriver setIsolatedDriver (WebDriver driver)
+    public static WebDriver getIsolatedDriver (ThreadLocal<WebDriver> threadDriver)
     {
-        ThreadLocal<WebDriver> threadDriver= new ThreadLocal<>();
-        threadDriver.set(driver);
         return threadDriver.get();
     }
 
-    public static void removeIsolatedDriver (WebDriver isolatedDriver)
+    public static void setIsolatedDriver(ThreadLocal<WebDriver> threadDriver, WebDriver driver)
     {
-        ThreadLocal<WebDriver> threadDriver= new ThreadLocal<>();
+        threadDriver.set(driver);
+    }
+
+    public static void removeIsolatedDriver (ThreadLocal<WebDriver> threadDriver)
+    {
         threadDriver.remove();
     }
 }

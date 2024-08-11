@@ -33,7 +33,7 @@ public class AdsPage {
     }
 
     //Actions
-    public String getAdTitle() {
+    public String getAdTitle() throws IOException {
         return readText(driver,adTitle);
     }
 

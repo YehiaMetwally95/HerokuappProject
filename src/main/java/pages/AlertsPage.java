@@ -61,8 +61,7 @@ public class AlertsPage {
         return getTextInAlert(driver);
     }
 
-    public String getTheResultText()
-    {
+    public String getTheResultText() throws IOException {
         return readText(driver,resultText);
     }
 }

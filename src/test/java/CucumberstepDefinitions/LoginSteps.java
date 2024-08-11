@@ -41,7 +41,7 @@ public class LoginSteps {
     }
 
     @Then("User can reach his homepage")
-    public void user_can_reach_his_homepage() {
+    public void user_can_reach_his_homepage() throws IOException {
         new LoginSubPage(basesteps.driver).verifyWelcomeText(welcomeText);
     }
 
@@ -58,7 +58,7 @@ public class LoginSteps {
                 .clickLoginButtonFailure();
     }
     @Then("Error Massage shall be displayed")
-    public void error_massage_shall_be_displayed() {
+    public void error_massage_shall_be_displayed() throws IOException {
                new LoginPage(basesteps.driver).verifyErrorAlert(errorMassage);
     }
 }

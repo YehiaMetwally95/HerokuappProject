@@ -37,7 +37,7 @@ public class DynamicLoadingSubPage{
     return this;
     }
 
-    public String getLoadedText() {
+    public String getLoadedText() throws IOException {
         return readText(driver,loadedTextLocator);
     }
 

@@ -15,6 +15,7 @@ import static utils.CookiesManager.*;
 import static utils.Screenshot.*;
 import static utils.WindowManager.*;
 import static utils.ThreadDriver.*;
+import static utils.DeleteDirectoryFiles.*;
 
 public class BaseTest {
 
@@ -29,31 +30,12 @@ public class BaseTest {
     //Clear Old Files
     public void clearOldFiles() throws IOException {
 
-        File file = new File("src/test/resources/Screenshots/FailedTests");
-        String[] myFiles;
-        if (file.isDirectory()) {
-            myFiles = file.list();
-            for (int i = 0; i < myFiles.length; i++) {
-                File myFile = new File(file, myFiles[i]);
-                myFile.delete();
-            }}
+        File file1 = new File("src/test/resources/Screenshots");
+        File file2 = new File("allure-results");
 
-        file = new File("src/test/resources/Screenshots/SuccessfulTests");
-        if (file.isDirectory()) {
-            myFiles = file.list();
-            for (int i = 0; i < myFiles.length; i++) {
-                File myFile = new File(file, myFiles[i]);
-                myFile.delete();
-            }}
-
-         file = new File("allure-results");
-        if (file.isDirectory()) {
-            myFiles = file.list();
-            for (int i = 0; i < myFiles.length; i++) {
-                File myFile = new File(file, myFiles[i]);
-                myFile.delete();
-            }}
-        }
+        deleteFiles(file1);
+        deleteFiles(file2);
+    }
 
     @BeforeMethod
     @Parameters({"URL","BrowserType"})

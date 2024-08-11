@@ -2,15 +2,26 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import utils.ActionBot;
 
 import java.io.IOException;
 
+import static utils.ActionBot.*;
+import static utils.AlertsActions.*;
+import static utils.BrowserOptions.*;
+import static utils.CookiesManager.*;
+import static utils.DropdownActions.*;
+import static utils.JDBC.*;
+import static utils.JsonFileWriter.*;
+import static utils.Screenshot.*;
+import static utils.ScrollActions.*;
+import static utils.TestDataGenerator.*;
+import static utils.Waits.*;
+import static utils.WindowManager.*;
+
 public class DynamicLoadingSubPage{
     //Variables
     WebDriver driver;
-    ActionBot bot;
 
     //Locators
     By startButtonLocator = By.xpath("//div[@id='start']/button");
@@ -18,17 +29,16 @@ public class DynamicLoadingSubPage{
     //Constructor
     protected DynamicLoadingSubPage(WebDriver driver) {
         this.driver = driver;
-        bot = new ActionBot(driver);
     }
 
     //Actions
     public DynamicLoadingSubPage clickOnStartButton() throws IOException {
-       bot.press(startButtonLocator);
+       press(driver,startButtonLocator);
     return this;
     }
 
     public String getLoadedText() {
-        return bot.readText(loadedTextLocator);
+        return readText(driver,loadedTextLocator);
     }
 
 }

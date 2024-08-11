@@ -2,15 +2,25 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import utils.ActionBot;
-
 import java.io.IOException;
+import static utils.ActionBot.*;
+import static utils.AlertsActions.*;
+import static utils.BrowserOptions.*;
+import static utils.CookiesManager.*;
+import static utils.DropdownActions.*;
+import static utils.JDBC.*;
+import static utils.JsonFileWriter.*;
+import static utils.Screenshot.*;
+import static utils.ScrollActions.*;
+import static utils.TestDataGenerator.*;
+import static utils.Waits.*;
+import static utils.WindowManager.*;
+
+import static utils.ActionBot.readText;
 
 public class AdsPage {
     //Variables
     WebDriver driver;
-    ActionBot bot;
 
     //Locators
     By adTitle = By.cssSelector(".modal-title h3");
@@ -20,21 +30,20 @@ public class AdsPage {
     //Constructor
     public AdsPage(WebDriver driver) {
         this.driver = driver;
-        bot = new ActionBot(driver);
     }
 
     //Actions
     public String getAdTitle() {
-        return bot.readText(adTitle);
+        return readText(driver,adTitle);
     }
 
     public AdsPage closeAd() throws IOException {
-        bot.press(closeButton);
+        press(driver,closeButton);
         return this;
     }
 
     public String VerifyAdisClosed() throws IOException {
-        return bot.readText(originalPageTitle);
+        return readText(driver,originalPageTitle);
     }
 
 }

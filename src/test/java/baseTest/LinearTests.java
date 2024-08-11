@@ -8,11 +8,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import utils.JDBC;
-import utils.JsonFileReader;
-import utils.JsonFileWriter;
-import utils.TestDataGenerator;
+import pages.LoginPage;
+import utils.*;
 
 import java.io.*;
 import java.sql.Connection;
@@ -22,7 +26,9 @@ import java.sql.SQLException;
 
 
 public class LinearTests {
-     String dbUrl = "jdbc:mysql://127.0.0.1:3306/yehiadb1";
+    public WebDriver driver;
+    private static final Logger log = LoggerFactory.getLogger(LinearTests.class);
+    String dbUrl = "jdbc:mysql://127.0.0.1:3306/yehiadb1";
      String dbUser = "root";
      String dbPassword = "yehia";
      String query = "SELECT * FROM yehiadb1.usercredentials ORDER BY Username ASC";
@@ -47,17 +53,27 @@ public class LinearTests {
     }
 
     @Test
-    public void test3() throws IOException, SQLException, ParseException {
+    @Parameters({"URL","BrowserType"})
+    public void setUpAndOpenBrowser(String url , String browserType)
+    {
+        //Open Browser
+        switch (browserType)
+        {
+            case "Chrome" :
+                driver= new ChromeDriver(BrowserOptions.getChromeOptions());
+                break;
 
-        WebDriver driver = new ChromeDriver();
-        driver.navigate().to("https://the-internet.herokuapp.com/login");
-        By usernameLocator = By.xpath("//input[@id='username']");
-        By passwordLocator = By.xpath("//input[@id='password']");
-        By text = By.id("flash");
-        driver.findElement(usernameLocator).sendKeys("www");
-        driver.findElement(passwordLocator).sendKeys("sss", Keys.RETURN);
-        System.out.println(driver.findElement(text).getText());
+            case "Firefox" :
+                driver= new FirefoxDriver(BrowserOptions.getFireFoxOptions());
+                break;
 
+            case "Edge" :
+                driver= new EdgeDriver(BrowserOptions.getEdgeOptions());
 
+                break;
+
+            default:
+                System.out.println("Wrong driver name");
+        }
     }
 }

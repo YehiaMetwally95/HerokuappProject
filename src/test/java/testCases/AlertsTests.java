@@ -1,6 +1,6 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AlertsPage;
@@ -8,7 +8,7 @@ import pages.HomePage;
 
 import java.io.IOException;
 
-public class AlertsTests extends CommonTests {
+public class AlertsTests extends BaseTest {
     String textInAlert = "I am a JS Alert";
     String resultTextAfterOkPressed = "You successfully clicked an alert";
 
@@ -25,13 +25,13 @@ public class AlertsTests extends CommonTests {
                 new HomePage(driver)
                 .clickOnAlertsPage()
                 .clickOnJSAlertTriggerButton()
-                .getTextInAlert()
+                .getTheTextInAlert()
                 , textInAlert);
 
         Assert.assertEquals(
                 new AlertsPage(driver)
-                                .acceptAlert()
-                                .getResultText()
+                                .acceptTheAlert()
+                                .getTheResultText()
                         , resultTextAfterOkPressed);
     }
 
@@ -41,13 +41,13 @@ public class AlertsTests extends CommonTests {
                 new HomePage(driver)
                         .clickOnAlertsPage()
                         .clickOnJSAlertConfirmButton()
-                        .getTextInAlert()
+                        .getTheTextInAlert()
                 , textInConfirm);
 
         Assert.assertEquals(
                 new AlertsPage(driver)
-                        .acceptAlert()
-                        .getResultText()
+                        .acceptTheAlert()
+                        .getTheResultText()
                 , resultTextAfterConfirmPressed);
     }
 
@@ -57,13 +57,13 @@ public class AlertsTests extends CommonTests {
                 new HomePage(driver)
                         .clickOnAlertsPage()
                         .clickOnJSAlertConfirmButton()
-                        .getTextInAlert()
+                        .getTheTextInAlert()
                 , textInConfirm);
 
         Assert.assertEquals(
                 new AlertsPage(driver)
-                        .dismissAlert()
-                        .getResultText()
+                        .dismissTheAlert()
+                        .getTheResultText()
                 , resultTextAfterDismissPressed);
     }
 
@@ -73,14 +73,14 @@ public class AlertsTests extends CommonTests {
                 new HomePage(driver)
                         .clickOnAlertsPage()
                         .clickOnJSAlertPromptButton()
-                        .getTextInAlert()
+                        .getTheTextInAlert()
                 , TextFromPrompt);
 
         Assert.assertEquals(
                 new AlertsPage(driver)
-                        .typeTextInAlert(TextInPrompt)
-                        .acceptAlert()
-                        .getResultText()
+                        .typeTheTextInAlert(TextInPrompt)
+                        .acceptTheAlert()
+                        .getTheResultText()
                 , "You entered: " + TextInPrompt);
     }
 }

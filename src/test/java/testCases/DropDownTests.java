@@ -1,6 +1,6 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DropDownTests extends CommonTests {
+public class DropDownTests extends BaseTest {
 
  private String DropDownSelectedValue = "Option 1";
     List dropDownOptions = new ArrayList();
@@ -28,7 +28,7 @@ public void getDropDownValue() throws IOException {
             new HomePage(driver)
                     .clickOnDropDownPage()
                     .selectFromDropDown("1")
-                    .getSelectedOption()
+                    .getTheSelectedOption()
             ,DropDownSelectedValue);
 }
 

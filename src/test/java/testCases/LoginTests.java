@@ -1,15 +1,14 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import io.qameta.allure.*;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import utils.JDBC;
-import utils.JsonFileReader;
-import utils.TestDataGenerator;
+import utils.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,7 +17,7 @@ import java.sql.SQLException;
 @Feature("User Login")
 @Story("Verify User Login on UI")
 @Listeners(utils.TestNGListners.class)
-public class LoginTests extends CommonTests {
+public class LoginTests extends BaseTest {
 
     JsonFileReader jsonReader;
     String dbUrl = "jdbc:mysql://127.0.0.1:3306/yehiadb1";
@@ -34,7 +33,8 @@ public class LoginTests extends CommonTests {
 
     @BeforeClass
     public void prepareTestData() throws IOException, ParseException, SQLException {
-        JDBC.setJsonFileFromDB(dbUrl,dbUser,dbPassword, dbQuery, jsonFilePath,jsonKeys,jsonMainKeys);
+        JDBC.setJsonFileFromDB(dbUrl,dbUser,dbPassword, dbQuery,
+                jsonFilePath,jsonKeys,jsonMainKeys);
         jsonReader = new JsonFileReader(jsonFilePath);
         jsonReader.setTestData("InvalidPasswordCredentials.Password"
                 , TestDataGenerator.generateStrongPassword());
@@ -46,6 +46,7 @@ public class LoginTests extends CommonTests {
     @Severity(SeverityLevel.CRITICAL)
     @Test
     public void SuccessfulLogin() throws IOException, ParseException {
+        WebDriver driver = threadDriver.get();
         new HomePage(driver)
                 .clickOnLoginPage()
                 .setUsername(jsonReader.getTestData("ValidCredentials.Username"))
@@ -58,6 +59,7 @@ public class LoginTests extends CommonTests {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void IncorrectUsernameLogin() throws IOException, ParseException {
+        WebDriver driver = threadDriver.get();
         new HomePage(driver)
                 .clickOnLoginPage()
                 .setUsername(jsonReader.getTestData("InvalidUserCredentials.Username"))
@@ -70,6 +72,7 @@ public class LoginTests extends CommonTests {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void IncorrectPasswordLogin() throws IOException, ParseException {
+        WebDriver driver = threadDriver.get();
         new HomePage(driver)
                 .clickOnLoginPage()
                 .setUsername(jsonReader.getTestData("InvalidPasswordCredentials.Username"))

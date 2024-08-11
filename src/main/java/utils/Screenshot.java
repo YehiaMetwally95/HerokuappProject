@@ -14,16 +14,10 @@ import java.io.IOException;
 
 public class Screenshot {
 
-    WebDriver driver;
-    int SuccessCodeForTestNG =1;
-    int FailureCodeForTestNG =2;
+    static int SuccessCodeForTestNG =1;
+    static int FailureCodeForTestNG =2;
 
-    public Screenshot(WebDriver driver)
-    {
-        this.driver = driver;
-    }
-
-    public void captureSuccess(ITestResult result) throws IOException {
+    public static void captureSuccess(WebDriver driver, ITestResult result) throws IOException {
         if (result.getStatus()==SuccessCodeForTestNG) {
 
             File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -35,7 +29,7 @@ public class Screenshot {
         }
     }
 
-    public void captureFailure(ITestResult result) throws IOException {
+    public static void captureFailure(WebDriver driver, ITestResult result) throws IOException {
         if (result.getStatus() == FailureCodeForTestNG) {
 
             File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -47,7 +41,7 @@ public class Screenshot {
         }
     }
 
-    public void captureSuccess(Scenario cucumberResult) throws IOException {
+    public static void captureSuccess(WebDriver driver, Scenario cucumberResult) throws IOException {
         //Increment ScreenshotFileNumber
         if (!cucumberResult.isFailed()) {
 
@@ -60,7 +54,7 @@ public class Screenshot {
         }
     }
 
-    public void captureFailure(Scenario cucumberResult) throws IOException {
+    public static void captureFailure(WebDriver driver, Scenario cucumberResult) throws IOException {
         if (cucumberResult.isFailed()) {
 
             File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);

@@ -1,13 +1,13 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
 import java.io.IOException;
 
-public class HoverTests extends CommonTests {
+public class HoverTests extends BaseTest {
 
     String displayedText = "Not Found";
 

@@ -1,6 +1,6 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.FileUploadPage;
@@ -8,7 +8,7 @@ import pages.HomePage;
 
 import java.io.IOException;
 
-public class UploadFileTests extends CommonTests {
+public class UploadFileTests extends BaseTest {
 
     String filePath = System.getProperty("user.dir") + "/src/test/resources/TestFiles/Mattresses.pdf";
     String successMassage = "File Uploaded!";

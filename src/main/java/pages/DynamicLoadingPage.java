@@ -2,14 +2,24 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import utils.ActionBot;
-
 import java.io.IOException;
+
+import static utils.ActionBot.*;
+import static utils.AlertsActions.*;
+import static utils.BrowserOptions.*;
+import static utils.CookiesManager.*;
+import static utils.DropdownActions.*;
+import static utils.JDBC.*;
+import static utils.JsonFileWriter.*;
+import static utils.Screenshot.*;
+import static utils.ScrollActions.*;
+import static utils.TestDataGenerator.*;
+import static utils.Waits.*;
+import static utils.WindowManager.*;
 
 public class DynamicLoadingPage {
     //Variables
     WebDriver driver;
-    ActionBot bot;
 
     //Locators
     By ExampleTwoLinkLocator = By.linkText("Example 2: Element rendered after the fact");
@@ -17,12 +27,11 @@ public class DynamicLoadingPage {
     //Constructor
     protected DynamicLoadingPage(WebDriver driver) {
         this.driver=driver;
-        bot = new ActionBot(driver);
     }
 
     //Actions
     public DynamicLoadingSubPage clickOnExample2Link() throws IOException {
-        bot.press(ExampleTwoLinkLocator);
+        press(driver,ExampleTwoLinkLocator);
     return new DynamicLoadingSubPage(driver);
     }
 }

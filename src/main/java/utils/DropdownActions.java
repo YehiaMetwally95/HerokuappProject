@@ -12,46 +12,38 @@ import java.util.stream.Collectors;
 
 public class DropdownActions {
 
-    WebDriver driver;
-
-    //Constructor
-    public DropdownActions(WebDriver driver)
+    public static void selectFromDropdownByValue(WebDriver driver, By dropdown , String value)
     {
-        this.driver = driver;
+        dropDownElement(driver,dropdown).selectByValue(value);
     }
 
-    public void selectFromDropdownByValue(By dropdown , String value)
+    public static void selectFromDropdownByIndex(WebDriver driver, By dropdown , int index)
     {
-        dropDownElement(dropdown).selectByValue(value);
+        dropDownElement(driver,dropdown).selectByIndex(index);
     }
 
-    public void selectFromDropdownByIndex(By dropdown , int index)
+    public static void selectFromDropdownByText(WebDriver driver, By dropdown , String text)
     {
-        dropDownElement(dropdown).selectByIndex(index);
+        dropDownElement(driver,dropdown).selectByVisibleText(text);
     }
 
-    public void selectFromDropdownByText(By dropdown , String text)
+    public static List<String> getAllOptionsAsString(WebDriver driver, By dropdown)
     {
-        dropDownElement(dropdown).selectByVisibleText(text);
-    }
-
-    public List<String> getAllOptionsAsString(By dropdown)
-    {
-        List<WebElement> options = dropDownElement(dropdown).getOptions();
+        List<WebElement> options = dropDownElement(driver,dropdown).getOptions();
         return options.stream().map(e->e.getText()).collect(Collectors.toList());
     }
 
-    public String getSelectedOption(By dropdown)
+    public static String getSelectedOption(WebDriver driver, By dropdown)
     {
-        return dropDownElement(dropdown).getFirstSelectedOption().getText();
+        return dropDownElement(driver,dropdown).getFirstSelectedOption().getText();
     }
 
-    public void deselectAllOptions(By dropdown)
+    public static void deselectAllOptions(WebDriver driver, By dropdown)
     {
-        dropDownElement(dropdown).deselectAll();
+        dropDownElement(driver,dropdown).deselectAll();
     }
 
-    private Select dropDownElement(By dropdownLocator)
+    private static Select dropDownElement(WebDriver driver , By dropdownLocator)
     {
         Waits.getFluentWait(driver).until(ExpectedConditions.elementToBeClickable(dropdownLocator));
         return new Select(driver.findElement(dropdownLocator));

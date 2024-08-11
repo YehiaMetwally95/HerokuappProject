@@ -1,8 +1,5 @@
 package utils;
 
-import com.github.javafaker.Faker;
-import org.json.simple.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,7 +11,7 @@ public class TestDataGenerator {
       return "Test" + currentTime;
     }
 
-    public static String generateInt()
+    public static String generateInteger()
     {
         return new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
     }

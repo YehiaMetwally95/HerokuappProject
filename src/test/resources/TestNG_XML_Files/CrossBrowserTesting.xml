@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<suite name="Login">
-    <test name="Chrome Login">
+<suite name="Login Suit" parallel="methods" thread-count="4">
+    <parameter name = "URL" value = "https://the-internet.herokuapp.com/"/>
+
+    <test name="Chrome Login"> <parameter name = "BrowserType" value = "Chrome"/>
         <classes>
-            <class name="testCases.LoginTests">
+            <class name = "testCases.LoginTests">
+                 <methods>
+                     <include name = "SuccessfulLogin"/>
+                     <include name = "IncorrectUsernameLogin"/>
+                     <include name = "IncorrectPasswordLogin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Firefox Login"> <parameter name = "BrowserType" value = "Firefox"/>
+        <classes>
+            <class name = "testCases.LoginTests">
                 <methods>
                     <include name = "SuccessfulLogin"/>
                     <include name = "IncorrectUsernameLogin"/>
@@ -12,4 +26,17 @@
             </class>
         </classes>
     </test>
+
+    <test name="Edge Login"> <parameter name = "BrowserType" value = "Edge"/>
+        <classes>
+            <class name = "testCases.LoginTests">
+                <methods>
+                    <include name = "SuccessfulLogin"/>
+                    <include name = "IncorrectUsernameLogin"/>
+                    <include name = "IncorrectPasswordLogin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
 </suite>

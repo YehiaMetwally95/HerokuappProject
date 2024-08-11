@@ -31,7 +31,7 @@ public class JsonFileReader {
         return (JSONObject) obj;
     }
 
-    //Method to Get JsonData by Input and Sub Input
+    //Method to Get JsonData by Input
     public String getTestData(String key) throws IOException, ParseException {
         String[] arrofSTG = key.split("\\.");
         Object object = getJsonFile().get(arrofSTG[0]);

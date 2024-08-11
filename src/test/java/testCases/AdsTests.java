@@ -1,13 +1,12 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
-
 import java.io.IOException;
 
-public class AdsTests extends CommonTests {
+public class AdsTests extends BaseTest {
 
     String adTitle = "THIS IS A MODAL WINDOW";
     String originalPageTitle = "Entry Ad";

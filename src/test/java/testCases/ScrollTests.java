@@ -1,12 +1,12 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
 import java.io.IOException;
 
-public class ScrollTests extends CommonTests {
+public class ScrollTests extends BaseTest {
 
     @Test
     private void scrollToTable() throws IOException {

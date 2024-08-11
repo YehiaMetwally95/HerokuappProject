@@ -23,15 +23,6 @@ public class BaseSteps {
     protected String Username;
 
     //Shared Methods
-    protected WindowManager getWindowManager()
-    {
-        return new WindowManager(driver);
-    }
-
-    public Screenshot getScreenshot()
-    {
-        return new Screenshot(driver);
-    }
 
     @Before()
     public void OpenBrowser()
@@ -39,18 +30,18 @@ public class BaseSteps {
         //Open Browser before every Scenario
         driver= new ChromeDriver(BrowserOptions.getChromeOptions());
         //Perform actions on Window Manager
-        getWindowManager().maximizeWindow();
+        WindowManager.maximizeWindow(driver);
     }
 
     @After()
     public void closeBrowser(Scenario scenario) throws IOException {
         //Take Screenshot after every successful test
-        getScreenshot().captureSuccess(scenario);
+        Screenshot.captureSuccess(driver,scenario);
 
         //Take Screenshot after every failed test
-        getScreenshot().captureFailure(scenario);
+        Screenshot.captureFailure(driver,scenario);
 
         //Close Browser after every Scenario
-        getWindowManager().closeCurrentWindow();
+        WindowManager.closeCurrentWindow(driver);
     }
 }

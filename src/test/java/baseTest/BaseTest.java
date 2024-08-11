@@ -2,8 +2,8 @@ package baseTest;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.events.EventFiringDecorator;
-import org.testng.ITestListener;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.*;
@@ -11,27 +11,25 @@ import utils.*;
 import java.io.File;
 import java.io.IOException;
 
-public class CommonTests {
+import static utils.ActionBot.*;
+import static utils.AlertsActions.*;
+import static utils.BrowserOptions.*;
+import static utils.CookiesManager.*;
+import static utils.DropdownActions.*;
+import static utils.JDBC.*;
+import static utils.JsonFileWriter.*;
+import static utils.Screenshot.*;
+import static utils.ScrollActions.*;
+import static utils.TestDataGenerator.*;
+import static utils.Waits.*;
+import static utils.WindowManager.*;
+
+public class BaseTest {
 
     //Variables
     public WebDriver driver;
+    public ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();;
     public String url = "https://the-internet.herokuapp.com/";
-
-    //Methods
-    public Screenshot getScreenshot()
-    {
-        return new Screenshot(driver);
-    }
-
-    public WindowManager getWindowManager()
-    {
-        return new WindowManager(driver);
-    }
-
-    public CookiesManager getCookiesManager()
-    {
-        return new CookiesManager(driver);
-    }
 
     //Annotations
 
@@ -66,33 +64,51 @@ public class CommonTests {
         }
 
     @BeforeMethod
-    public void setUpAndOpenBrowser()
+    @Parameters({"URL","BrowserType"})
+    public void setUpAndOpenBrowser(String url , String browserType)
     {
         //Open Browser
-        driver= new ChromeDriver(BrowserOptions.getChromeOptions());
+        switch (browserType)
+        {
+            case "Chrome" :
+                driver= new ChromeDriver(BrowserOptions.getChromeOptions());
+                break;
+
+            case "Firefox" :
+                driver= new FirefoxDriver(BrowserOptions.getFireFoxOptions());
+                break;
+
+            case "Edge" :
+                driver= new EdgeDriver(BrowserOptions.getEdgeOptions());
+                break;
+                default:
+                    System.out.println("Wrong driver name");
+        }
+
+        //Generate Isolated Driver from ThreadLocal
+        threadDriver.set(driver);
 
         //Perform actions on Window Manager
-        getWindowManager().maximizeWindow();
-        getWindowManager().navigateToURL(url);
+        navigateToURL(threadDriver.get(), url);
     }
 
     @AfterMethod
     public void getScreenshots(ITestResult result) throws IOException {
 
         //Take Screenshot after every successful test
-        getScreenshot().captureSuccess(result);
+        captureSuccess(threadDriver.get(),result);
 
         //Take Screenshot after every failed test
-        getScreenshot().captureFailure(result);
+        captureFailure(threadDriver.get(), result);
     }
 
     @AfterMethod (dependsOnMethods = "getScreenshots")
     public void tearDownBrowser(){
 
         //Delete All Cookies
-        getCookiesManager().deleteAllCookies();
-
+        deleteAllCookies(threadDriver.get());
         //Close Browser after every test
-       getWindowManager().closeCurrentWindow();
+        closeCurrentWindow(threadDriver.get());
+        threadDriver.remove();
     }
 }

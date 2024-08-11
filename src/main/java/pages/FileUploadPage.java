@@ -1,10 +1,20 @@
 package pages;
 
-import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import utils.ActionBot;
+
+import static utils.ActionBot.*;
+import static utils.AlertsActions.*;
+import static utils.BrowserOptions.*;
+import static utils.CookiesManager.*;
+import static utils.DropdownActions.*;
+import static utils.JDBC.*;
+import static utils.JsonFileWriter.*;
+import static utils.Screenshot.*;
+import static utils.ScrollActions.*;
+import static utils.TestDataGenerator.*;
+import static utils.Waits.*;
+import static utils.WindowManager.*;
 
 import java.io.IOException;
 
@@ -12,7 +22,6 @@ public class FileUploadPage {
 
     //Variables
     WebDriver driver;
-    ActionBot bot;
 
     //Locators
     By chooseFileButton = By.id("file-upload");
@@ -23,21 +32,20 @@ public class FileUploadPage {
     //Constructor
     public FileUploadPage(WebDriver driver) {
         this.driver = driver;
-        bot = new ActionBot(driver);
     }
 
     //Actions
     public FileUploadPage uploadFile(String filePath) throws IOException {
-        bot.type(chooseFileButton,filePath);
-        bot.press(uploadButton);
+        type(driver,chooseFileButton,filePath);
+        press(driver,uploadButton);
         return this;
     }
 
     public String getSuccessMassage() throws IOException {
-        return bot.readText(successMassage);
+        return readText(driver,successMassage);
     }
 
     public String getUploadedFileName() throws IOException {
-        return bot.readText(fileName);
+        return readText(driver,fileName);
     }
 }

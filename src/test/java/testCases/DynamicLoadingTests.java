@@ -1,13 +1,13 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
 import java.io.IOException;
 
-public class DynamicLoadingTests extends CommonTests {
+public class DynamicLoadingTests extends BaseTest {
 
     private String LoadedText = "Hello World!";
 

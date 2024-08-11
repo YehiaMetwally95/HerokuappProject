@@ -5,14 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public class CookiesManager {
 
-    WebDriver driver;
-
-    public CookiesManager(WebDriver driver)
-    {
-        this.driver = driver;
-    }
-
-    public Cookie buildCookie(String name , String value , String url)
+    public static Cookie buildCookie(String name , String value , String url)
     {
         Cookie cookie = new Cookie.Builder(name , value)
                 .domain(url)
@@ -20,27 +13,27 @@ public class CookiesManager {
     return cookie;
     }
 
-    public void addCookie(Cookie cookie)
+    public static void addCookie(WebDriver driver , Cookie cookie)
     {
         driver.manage().addCookie(cookie);
     }
 
-    public void deleteCookie(Cookie cookie)
+    public static void deleteCookie(WebDriver driver ,Cookie cookie)
     {
         driver.manage().deleteCookie(cookie);
     }
 
-    public Cookie getCookieByName(String cookieName)
+    public static Cookie getCookieByName(WebDriver driver , String cookieName)
     {
         return driver.manage().getCookieNamed(cookieName);
     }
 
-    public void deleteAllCookies()
+    public static void deleteAllCookies(WebDriver driver)
     {
         driver.manage().deleteAllCookies();
     }
 
-    public int getCookiesNumber()
+    public static int getCookiesNumber(WebDriver driver)
     {
         return driver.manage().getCookies().size();
     }

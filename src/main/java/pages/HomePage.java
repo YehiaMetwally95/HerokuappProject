@@ -3,16 +3,25 @@ package pages;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Wait;
-import utils.ActionBot;
-import utils.Waits;
+
+import static utils.ActionBot.*;
+import static utils.AlertsActions.*;
+import static utils.BrowserOptions.*;
+import static utils.CookiesManager.*;
+import static utils.DropdownActions.*;
+import static utils.JDBC.*;
+import static utils.JsonFileWriter.*;
+import static utils.Screenshot.*;
+import static utils.ScrollActions.*;
+import static utils.TestDataGenerator.*;
+import static utils.Waits.*;
+import static utils.WindowManager.*;
 
 import java.io.IOException;
 
 public class HomePage {
     //Variables
     WebDriver driver;
-    ActionBot bot;
 
     //Locators
     By formAuthenticationLocator = By.linkText("Form Authentication");
@@ -29,7 +38,6 @@ public class HomePage {
     public HomePage (WebDriver driver)
     {
     this.driver=driver;
-    bot = new ActionBot(driver);
     }
 
     @Step("Navigate To Login Page")
@@ -80,7 +88,7 @@ public class HomePage {
     }
 
     private void click (By locator) throws IOException {
-       bot.press(locator);
+       press(driver,locator);
     }
 
 }

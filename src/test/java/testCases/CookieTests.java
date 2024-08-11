@@ -1,21 +1,24 @@
 package testCases;
 
-import baseTest.CommonTests;
+import baseTest.BaseTest;
 import org.openqa.selenium.Cookie;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import utils.CookiesManager;
 
-public class CookieTests extends CommonTests {
+import static utils.CookiesManager.*;
+
+public class CookieTests extends BaseTest {
 
     @Test
     public void addNewCookie()
     {
-        Cookie cookie1 = getCookiesManager().buildCookie("newCookieName"
+        Cookie cookie1 = buildCookie("newCookieName"
                 ,"12345","the-internet.herokuapp.com");
-        getCookiesManager().addCookie(cookie1);
 
-        Cookie cookie2 = getCookiesManager()
-                .getCookieByName("newCookieName");
+        addCookie(driver,cookie1);
+
+        Cookie cookie2 = getCookieByName(driver,"newCookieName");
 
         Assert.assertEquals(cookie1,cookie2);
     }
@@ -23,23 +26,21 @@ public class CookieTests extends CommonTests {
     @Test
     public void deleteExistingCookie()
     {
-        Cookie cookie1 = getCookiesManager()
-                .getCookieByName("optimizelyBuckets");
-        getCookiesManager().deleteCookie(cookie1);
+        Cookie cookie1 = getCookieByName(driver,"optimizelyBuckets");
+        deleteCookie(driver,cookie1);
 
-        Cookie cookie2 = getCookiesManager()
-                .getCookieByName("optimizelyBuckets");
+        Cookie cookie2 = getCookieByName(driver,"optimizelyBuckets");
 
         Assert.assertNull(cookie2);
     }
 
     @Test
-    public void deleteAllCookies()
+    public void deleteAllCookiesAfterTest()
     {
-        getCookiesManager().deleteAllCookies();
+        deleteAllCookies(driver);
 
         Assert.assertEquals(
-                getCookiesManager().getCookiesNumber()
+                getCookiesNumber(driver)
                 , 0
         );
     }

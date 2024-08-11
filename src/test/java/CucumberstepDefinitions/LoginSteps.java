@@ -8,6 +8,7 @@ import org.testng.Assert;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.LoginSubPage;
+import utils.WindowManager;
 
 import java.io.IOException;
 
@@ -26,7 +27,7 @@ public class LoginSteps {
 
     @Given("User navigates to Login Page")
     public void user_navigates_to_login_page() throws IOException {
-        basesteps.getWindowManager().navigateToURL(basesteps.url);
+        WindowManager.navigateToURL(basesteps.driver,basesteps.url);
         new HomePage(basesteps.driver).clickOnLoginPage();
     }
 

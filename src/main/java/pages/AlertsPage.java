@@ -2,18 +2,14 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import utils.ActionBot;
-import utils.AlertsActions;
-
 import java.io.IOException;
+import static utils.ActionBot.*;
+import static utils.AlertsActions.*;
 
 public class AlertsPage {
 
     //Variables
     WebDriver driver;
-    ActionBot bot;
-    AlertsActions alert;
 
     //Locators
     By triggerJSAlertButton = By.xpath("//button[.='Click for JS Alert']");
@@ -24,51 +20,49 @@ public class AlertsPage {
     //Constructor
     public AlertsPage(WebDriver driver) {
         this.driver = driver;
-         bot = new ActionBot(driver);
-         alert = new AlertsActions(driver);
     }
 
     //Actions
     public AlertsPage clickOnJSAlertTriggerButton() throws IOException {
-         bot.press(triggerJSAlertButton);
+         press(driver,triggerJSAlertButton);
          return this;
     }
 
     public AlertsPage clickOnJSAlertConfirmButton() throws IOException {
-        bot.press(triggerJSConfirmButton);
+        press(driver,triggerJSConfirmButton);
         return this;
     }
 
     public AlertsPage clickOnJSAlertPromptButton() throws IOException {
-        bot.press(triggerJSPromptButton);
+        press(driver,triggerJSPromptButton);
         return this;
     }
 
-    public AlertsPage acceptAlert()
+    public AlertsPage acceptTheAlert()
     {
-        alert.acceptAlert();
+        acceptAlert(driver);
         return this;
     }
 
-    public AlertsPage dismissAlert()
+    public AlertsPage dismissTheAlert()
     {
-        alert.dismissAlert();
+        dismissAlert(driver);
         return this;
     }
 
-    public AlertsPage typeTextInAlert(String text)
+    public AlertsPage typeTheTextInAlert(String text)
     {
-        alert.typeTextInAlert(text);
+        typeTextInAlert(driver,text);
         return this;
     }
 
-    public String getTextInAlert()
+    public String getTheTextInAlert()
     {
-        return alert.getTextInAlert();
+        return getTextInAlert(driver);
     }
 
-    public String getResultText()
+    public String getTheResultText()
     {
-        return bot.readText(resultText);
+        return readText(driver,resultText);
     }
 }

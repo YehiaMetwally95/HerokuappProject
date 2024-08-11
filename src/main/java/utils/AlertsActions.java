@@ -5,33 +5,26 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 
 public class AlertsActions {
-    WebDriver driver;
 
-    //Constructor
-    public AlertsActions(WebDriver driver)
-    {
-        this.driver = driver;
-    }
-
-    public void acceptAlert()
+    public static void acceptAlert(WebDriver driver)
     {
         Waits.getFluentWait(driver).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
 
-    public void dismissAlert()
+    public static void dismissAlert(WebDriver driver)
     {
         Waits.getFluentWait(driver).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().dismiss();
     }
 
-    public void typeTextInAlert(String text)
+    public static void typeTextInAlert(WebDriver driver,String text)
     {
         Waits.getFluentWait(driver).until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().sendKeys(text);
     }
 
-    public String getTextInAlert()
+    public static String getTextInAlert(WebDriver driver)
     {
         Waits.getFluentWait(driver).until(ExpectedConditions.alertIsPresent());
         return driver.switchTo().alert().getText();

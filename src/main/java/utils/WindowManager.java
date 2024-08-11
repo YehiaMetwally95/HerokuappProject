@@ -6,50 +6,46 @@ import org.openqa.selenium.interactions.Actions;
 
 public class WindowManager {
 
-    WebDriver driver;
+    public static void navigateForward(WebDriver driver) {driver.navigate().forward();}
 
-    public WindowManager(WebDriver driver)
-    {
-        this.driver = driver;
-    }
-
-    public void navigateForward()
-    {
-    driver.navigate().forward();
-    }
-
-    public void navigateBackward()
+    public static void navigateBackward(WebDriver driver)
     {
         driver.navigate().back();
     }
 
-    public void refreshWindow()
+    public static void refreshWindow(WebDriver driver)
     {
         driver.navigate().refresh();
     }
 
-    public void navigateToURL(String url)
+    public static void navigateToURL(WebDriver driver,String url)
     {
         driver.navigate().to(url);
     }
 
-    public void maximizeWindow()
+    public static void maximizeWindow(WebDriver driver)
     {
         driver.manage().window().maximize();
     }
 
-    public void  minimizeWindow()
+    public static void minimizeWindow(WebDriver driver)
     {
         driver.manage().window().minimize();
     }
 
-    public void fullScreenWindow()
+    public static void fullScreenWindow(WebDriver driver)
     {
         driver.manage().window().fullscreen();
     }
 
-    public void closeCurrentWindow()
+    public static void closeCurrentWindow(WebDriver driver)
     {
         driver.close();
     }
+
+    public static void closeAllWindows(WebDriver driver)
+    {
+        driver.quit();
+    }
+
 }

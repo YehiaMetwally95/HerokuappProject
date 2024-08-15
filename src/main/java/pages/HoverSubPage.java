@@ -11,7 +11,6 @@ import static utils.BrowserOptions.*;
 import static utils.CookiesManager.*;
 import static utils.DropdownActions.*;
 import static utils.JDBC.*;
-import static utils.JsonFileWriter.*;
 import static utils.Screenshot.*;
 import static utils.ScrollActions.*;
 import static utils.TestDataGenerator.*;

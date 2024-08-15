@@ -3,19 +3,20 @@ package utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
 
-public class JsonFileReader {
+public class JsonFileManager {
 
     //Variables
-    String filePath;
+    private String filePath;
 
     //Constructor
-    public JsonFileReader(String filePath) {
+    public JsonFileManager(String filePath) {
         this.filePath = filePath;
     }
 
@@ -44,6 +45,25 @@ public class JsonFileReader {
         return (String) object;
     }
 
+    //Method to Get JsonData by Input
+    public String getTestDataInsideArray(String key) throws IOException, ParseException {
+        String[] arrofSTG = key.split("\\.");
+        String[] arrofSTG_2 = (arrofSTG[0]).split("\\[");
+        String [] arrofSTG_3 = (arrofSTG_2[1]).split("]");
+        int index = Integer.parseInt(arrofSTG_3[0]);
+
+        JSONArray array = (JSONArray) getJsonFile().get(arrofSTG_2[0]);
+        Object object = null;
+        if (arrofSTG.length==2) {
+            object = (array).get(index);
+            object = ((JSONObject) object).get(arrofSTG[1]);
+        }
+        if (arrofSTG.length==3) {
+            object = ((JSONObject) object).get(arrofSTG[2]);
+        }
+        return (String) object;
+    }
+
     //Method to Set JsonData by Input
     public void setTestData(String key, String value) throws IOException, ParseException {
         String[] arrofSTG = key.split("\\.");
@@ -64,8 +84,15 @@ public class JsonFileReader {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String formattedJson = gson.toJson(object);
-        JsonFileWriter.createJsonFile(formattedJson,filePath);
+        createJsonFile(formattedJson,filePath);
     }
+
+    public static void createJsonFile(String jsonString , String jsonFilePath) throws IOException {
+        FileWriter file = new FileWriter(jsonFilePath);
+        file.write(jsonString);
+        file.close();
+    }
+
 }
 
 

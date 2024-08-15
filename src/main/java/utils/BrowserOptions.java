@@ -1,25 +1,51 @@
 package utils;
 
-import io.cucumber.java.it.Ed;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.chromium.ChromiumOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.Arrays;
+import static utils.PropertiesFileManager.*;
 
 public class BrowserOptions {
+
+    public static WebDriver openBrowser()
+    {
+        WebDriver driver = null;
+        switch (getPropertiesValue("browserType"))
+        {
+            case "Chrome" :
+                driver= new ChromeDriver(BrowserOptions.getChromeOptions());
+                break;
+
+            case "Firefox" :
+                driver= new FirefoxDriver(BrowserOptions.getFireFoxOptions());
+                break;
+
+            case "Edge" :
+                driver= new EdgeDriver(BrowserOptions.getEdgeOptions());
+
+                break;
+            default:
+                System.out.println("Wrong driver name");
+        }
+        return driver;
+    }
 
     public static ChromeOptions getChromeOptions()
     {
         ChromeOptions option = new ChromeOptions();
         option.addArguments("--disable-infobars");
         option.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
-        option.addArguments("--start-maximized");
-        //option.addArguments("--headless=new");
+
+        if (getPropertiesValue("windowMaximized").equalsIgnoreCase("true"))
+            option.addArguments("--start-maximized");
+        if (getPropertiesValue("headless").equalsIgnoreCase("true"))
+            option.addArguments("--headless");
         return option;
     }
 
@@ -28,17 +54,22 @@ public class BrowserOptions {
         EdgeOptions option = new EdgeOptions();
         option.addArguments("--disable-infobars");
         option.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
-       // option.addArguments("--headless=new");
         option.addArguments("--guest");
-        option.addArguments("--start-maximized");
+
+        if (getPropertiesValue("windowMaximized").equalsIgnoreCase("true"))
+            option.addArguments("--start-maximized");
+        if (getPropertiesValue("headless").equalsIgnoreCase("true"))
+            option.addArguments("--headless");
         return option;
     }
 
     public static FirefoxOptions getFireFoxOptions()
     {
         FirefoxOptions option = new FirefoxOptions();
-        //option.addArguments("-headless");
-        option.addArguments("--start-maximized");
+        if (getPropertiesValue("windowMaximized").equalsIgnoreCase("false"))
+            option.addArguments("--start-minimized");
+        if (getPropertiesValue("headless").equalsIgnoreCase("true"))
+            option.addArguments("--headless");
         return option;
     }
 

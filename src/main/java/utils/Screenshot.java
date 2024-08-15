@@ -69,10 +69,10 @@ public class Screenshot {
     }
 
     public static void takeElementScreenshot(WebDriver driver, By locator , String targetPath ,
-                                             String fileName , String fileExtension) throws IOException {
+                                             String fileName) throws IOException {
         File source = driver.findElement(locator).getScreenshotAs(OutputType.FILE);
         File destination =
-                new File (targetPath+fileName+"."+fileExtension);
+                new File (targetPath+fileName+".png");
 
         FileHandler.copy(source,destination);
 

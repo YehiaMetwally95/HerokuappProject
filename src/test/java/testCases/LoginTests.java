@@ -2,18 +2,23 @@ package testCases;
 
 import baseTest.BaseTest;
 import io.qameta.allure.*;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import utils.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static utils.JDBC.*;
+import static utils.TestDataGenerator.*;
 import static utils.ThreadDriver.getIsolatedDriver;
+
+import utils.JDBC;
+import utils.JsonFileManager;
 
 @Epic("HerokuApp Functionalities")
 @Feature("User Login")
@@ -21,27 +26,27 @@ import static utils.ThreadDriver.getIsolatedDriver;
 @Listeners(utils.TestNGListners.class)
 public class LoginTests extends BaseTest {
 
-    JsonFileReader jsonReader;
-    String dbUrl = "jdbc:mysql://127.0.0.1:3306/yehiadb1";
-    String dbUser = "root";
-    String dbPassword = "yehia";
-    String dbQuery = "SELECT Username,Password,Massage FROM yehiadb1.usercredentials ORDER BY ID ASC";
+    JsonFileManager jsonReader;
+    String dbQuery1 = "SELECT * FROM yehiadb1.usercredentials Order by ID ASC";
+    String dbQuery2 = "SELECT * FROM yehiadb1.massages Order by ID ASC";
     String jsonFilePath = "src/test/resources/TestDataJsonFiles/LoginCredentials.json";
     //JsonKeys shall be filled by the same order of table columns on database "always DESC"
-    String[] jsonKeys = {"Username","Password","Massage"};
+    String[] jsonKeys = {"Username","Password","ID"};
     //JsonMainKeys shall be filled by the same order of table rows on database
-    String[] jsonMainKeys = {"ValidCredentials","InvalidPasswordCredentials",
-            "InvalidUserCredentials"};
+    String[] jsonMainKeys = {"FirstUser","SecondUser","ThirdUser"};
+    String jsonMainKey = "Credentials";
+
+    String[] jsonKeys2 = {"ID","MassageName","MassageValue"};
+
+    String[] jsonMainKey2 = {"SuccessfulLogin","FailedLoginUsername","FailedLoginPassword"};
 
     @BeforeClass
     public void prepareTestData() throws IOException, ParseException, SQLException {
-        JDBC.setJsonFileFromDB(dbUrl,dbUser,dbPassword, dbQuery,
-                jsonFilePath,jsonKeys,jsonMainKeys);
-        jsonReader = new JsonFileReader(jsonFilePath);
-        jsonReader.setTestData("InvalidPasswordCredentials.Password"
-                , TestDataGenerator.generateStrongPassword());
-        jsonReader.setTestData("InvalidUserCredentials.Username"
-                ,TestDataGenerator.generateName());
+        jsonReader = new JsonFileManager(jsonFilePath);
+        JSONObject obj1 = JDBC.setJsonObjectFromDBForNestedArrayOfJsonObjects(dbQuery1,jsonKeys,jsonMainKey);
+        JSONObject obj2 = JDBC.setJsonObjectFromDBForNestedJsonObjects(dbQuery2,jsonKeys2,jsonMainKey2);
+        JSONObject[] obj = {obj1, obj2};
+        JDBC.setJsonFileFromMultipleJsonObjects(obj,jsonFilePath);
     }
 
     @Description("Successful Login With Valid Username And Password")
@@ -51,10 +56,10 @@ public class LoginTests extends BaseTest {
         WebDriver driver = getIsolatedDriver(threadDriver);
         new HomePage(driver)
                 .clickOnLoginPage()
-                .setUsername(jsonReader.getTestData("ValidCredentials.Username"))
-                .setPassword(jsonReader.getTestData("ValidCredentials.Password"))
+                .setUsername(jsonReader.getTestDataInsideArray("Credentials[0].Username"))
+                .setPassword(jsonReader.getTestDataInsideArray("Credentials[0].Password"))
                 .clickLoginButtonSuccess()
-                .verifyWelcomeText(jsonReader.getTestData("ValidCredentials.Massage"));
+                .verifyWelcomeText(jsonReader.getTestData("SuccessfulLogin.MassageValue"));
     }
 
     @Description("Failed Login With Invalid Username And Valid Password")
@@ -64,10 +69,10 @@ public class LoginTests extends BaseTest {
         WebDriver driver = getIsolatedDriver(threadDriver);
         new HomePage(driver)
                 .clickOnLoginPage()
-                .setUsername(jsonReader.getTestData("InvalidUserCredentials.Username"))
-                .setPassword(jsonReader.getTestData("InvalidUserCredentials.Password"))
+                .setUsername(jsonReader.getTestData("SecondUser.Username"))
+                .setPassword(jsonReader.getTestData("SecondUser.Password"))
                 .clickLoginButtonFailure()
-                .verifyErrorAlert(jsonReader.getTestData("InvalidUserCredentials.Massage"));
+                .verifyErrorAlert(jsonReader.getTestData("SecondUser.ID"));
     }
 
     @Description("Failed Login With Valid Username And Invalid Password")

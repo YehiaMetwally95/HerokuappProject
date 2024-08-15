@@ -1,9 +1,6 @@
 package baseTest;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.*;
@@ -11,18 +8,19 @@ import utils.*;
 import java.io.File;
 import java.io.IOException;
 
+import static utils.BrowserOptions.openBrowser;
 import static utils.CookiesManager.*;
 import static utils.Screenshot.*;
 import static utils.WindowManager.*;
 import static utils.ThreadDriver.*;
 import static utils.DeleteDirectoryFiles.*;
+import static utils.PropertiesFileManager.*;
 
 public class BaseTest {
 
     //Variables
     public WebDriver driver;
     public ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();;
-    public String url = "https://the-internet.herokuapp.com/";
 
     //Annotations
 
@@ -38,32 +36,17 @@ public class BaseTest {
     }
 
     @BeforeMethod
-    @Parameters({"URL","BrowserType"})
-    public void setUpAndOpenBrowser(String url , String browserType)
+    //@Parameters({"BrowserType"})
+    public void setUpAndOpenBrowser()
     {
         //Open Browser
-        switch (browserType)
-        {
-            case "Chrome" :
-                driver= new ChromeDriver(BrowserOptions.getChromeOptions());
-                break;
-
-            case "Firefox" :
-                driver= new FirefoxDriver(BrowserOptions.getFireFoxOptions());
-                break;
-
-            case "Edge" :
-                driver= new EdgeDriver(BrowserOptions.getEdgeOptions());
-                break;
-                default:
-                    System.out.println("Wrong driver name");
-        }
+        driver = openBrowser();
 
         //Generate Isolated Driver from ThreadDriver
         setIsolatedDriver(threadDriver,driver);
 
         //Perform actions on Window
-        navigateToURL(getIsolatedDriver(threadDriver), url);
+        navigateToURL(getIsolatedDriver(threadDriver), getPropertiesValue("baseUrl"));
     }
 
     @AfterMethod
@@ -81,9 +64,11 @@ public class BaseTest {
 
         //Delete All Cookies
         deleteAllCookies(getIsolatedDriver(threadDriver));
+
         //Close Browser after every test
         closeCurrentWindow(getIsolatedDriver(threadDriver));
 
+        //Remove the Isolated Driver from Memory
         removeIsolatedDriver(threadDriver);
     }
 }

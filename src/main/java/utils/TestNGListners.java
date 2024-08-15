@@ -2,7 +2,10 @@ package utils;
 
 import org.testng.*;
 
+import java.io.IOException;
+
 public class TestNGListners implements ITestListener , IInvokedMethodListener , ISuiteListener {
+    String propertiesFilePath = "src/main/resources/Configurations.properties";
 
     public void onTestStart(ITestResult result) {
         // not implemented
@@ -10,7 +13,6 @@ public class TestNGListners implements ITestListener , IInvokedMethodListener , 
 
     public void onTestSuccess(ITestResult result) {
     }
-
 
     public void onTestFailure(ITestResult result) {
     }
@@ -20,7 +22,14 @@ public class TestNGListners implements ITestListener , IInvokedMethodListener , 
     }
 
     public void onStart(ITestContext context) {
-        // not implemented
+        PropertiesFileManager.filePath = propertiesFilePath;
+
+        try {
+            PropertiesFileManager.loadPropertiesIntoSystem();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void onFinish(ITestContext context) {

@@ -28,7 +28,7 @@ public class ActionBot {
 
         System.out.println("Typing " + text);
 
-        takeElementScreenshot(driver,locator,textBoxesPath,generateInteger(),"png");
+        takeElementScreenshot(driver,locator,textBoxesPath,generateInteger());
     }
 
     //ActionBot2 for Pressing on Button or Link
@@ -37,7 +37,7 @@ public class ActionBot {
         Waits.getFluentWait(driver).until(f -> {
             System.out.println("Clicking On " + driver.findElement(locator).getText());
             try {
-                takeElementScreenshot(driver,locator,pressedButtonsPath,generateInteger(),"png");
+                takeElementScreenshot(driver,locator,pressedButtonsPath,generateInteger());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -54,7 +54,7 @@ public class ActionBot {
             return true;
         });
 
-        takeElementScreenshot(driver,locator,retrievedTextPath,generateInteger(),"png");
+        takeElementScreenshot(driver,locator,retrievedTextPath,generateInteger());
 
         return driver.findElement(locator).getText().replace("\n","");
 

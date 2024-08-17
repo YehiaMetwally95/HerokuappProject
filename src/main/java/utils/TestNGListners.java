@@ -23,13 +23,11 @@ public class TestNGListners implements ITestListener , IInvokedMethodListener , 
 
     public void onStart(ITestContext context) {
         PropertiesFileManager.filePath = propertiesFilePath;
-
         try {
             PropertiesFileManager.loadPropertiesIntoSystem();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void onFinish(ITestContext context) {

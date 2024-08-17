@@ -9,6 +9,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.util.Map;
 
 public class JsonFileManager {
 
@@ -91,6 +92,12 @@ public class JsonFileManager {
         FileWriter file = new FileWriter(jsonFilePath);
         file.write(jsonString);
         file.close();
+    }
+
+    public static org.json.JSONObject convertMaptoJsonObject(Map map)
+    {
+        org.json.JSONObject object = new org.json.JSONObject(map);
+        return  object;
     }
 
 }
